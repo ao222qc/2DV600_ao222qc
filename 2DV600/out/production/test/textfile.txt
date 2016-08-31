@@ -1,0 +1,2 @@
+Hello, my name is Adam and this is a test text file in order to try out counting capital letters and such.
+This is a new line.
