@@ -20,7 +20,7 @@ public class CountJava
 
         try
         {
-            if(args[0] != null)
+            if(args.length != 0)
             {
                 path = args[0];
             }
@@ -41,7 +41,10 @@ public class CountJava
     private static void getFilePaths(String path)
     {
         File directory = new File(path);
-
+        if(!directory.isDirectory())
+        {
+            return;
+        }
         for(File x : directory.listFiles())
         {
             if (x.isDirectory())
