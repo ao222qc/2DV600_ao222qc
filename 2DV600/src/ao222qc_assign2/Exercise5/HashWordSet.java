@@ -98,11 +98,18 @@ public class HashWordSet implements WordSet
         //Sets nextNode to the first val in the found bucket.
         public HashWordSetIterator()
         {
-            while(buckets[index] == null && index < size)
+            try
             {
-                index++;
+                while (buckets[index] == null && index < size)
+                {
+                    index++;
+                }
+                nextNode = buckets[index];
             }
-            nextNode = buckets[index];
+            catch (NullPointerException e)
+            {
+                System.out.println(e.getMessage());
+            }
         }
 
         @Override
