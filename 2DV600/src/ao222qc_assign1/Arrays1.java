@@ -5,6 +5,7 @@ package ao222qc_assign1;
  */
 import java.util.Arrays;
 public class Arrays1 {
+
     public static void main(String args[]) throws Exception
     {
 
@@ -80,14 +81,14 @@ public class Arrays1 {
             {
                 throw new Exception();
             }
-            int subLength = sub.length;
+            int subLength = sub.length;     //Length of sub array to "splice" sections of larger array.
             int[] tempArr = new int[subLength];
 
             int[] fastArr = new int[subLength];
 
-            for (int i = subLength; i <= arr.length; i++) {
-                for (int k = subLength; k > 0; k--) {
-                    tempArr[subLength - k] = arr[i - k];
+            for (int i = subLength; i <= arr.length; i++) { //Start at subLength, example size 4 of sub array.
+                for (int k = subLength; k > 0; k--) {       //Loop backwards over larger array from that position
+                    tempArr[subLength - k] = arr[i - k];    //Add values from the larger array to a temp arr
                 }
                 if (Arrays.equals(tempArr, sub)) {
                     return true;
@@ -96,7 +97,7 @@ public class Arrays1 {
         }
         catch(Exception e)
         {
-            System.out.println("Error.");
+            System.out.println("Error. Sub array is larger than main array.");
         }
         return false;
     }

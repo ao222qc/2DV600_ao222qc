@@ -4,43 +4,50 @@ package ao222qc_assign1; /**
 import java.util.Scanner;
 public class CountDigits {
 
-    public static void CountDigits()
+    public static void main(String args[])
     {
-        Scanner input_scanner = new Scanner(System.in);
+        countDigits();
+    }
 
-        int user_integer = input_scanner.nextInt();
+    public static void countDigits()
+    {
+        Scanner inputScanner = new Scanner(System.in);
+
+        int userInteger = inputScanner.nextInt();
 
         //String inputted_numbers_as_string = Integer.toString(user_integer);
 
-        int amount_of_zeroes = 0;
-        int amount_of_odds = 0;
-        int amount_of_even = 0;
-        int total_sum = 0;
+        int amountofZeroes = 0;
+        int amountOfOdds = 0;
+        int amountOfEven = 0;
+        int totalSum = 0;
 
-        while(user_integer > 0)
+        while(userInteger > 0)
         {
-            int digit = user_integer % 10;
-            total_sum += digit;
+            //Get rest product modulu 10 to get the last digit of the number.
+            int digit = userInteger % 10;
+            totalSum += digit;
             if(digit == 0)
             {
-                amount_of_zeroes += 1;
+                amountofZeroes += 1;
             }
             else if(digit % 2 != 0)
             {
-                amount_of_odds += 1;
+                amountOfOdds += 1;
             }
             else
             {
-                amount_of_even += 1;
+                amountOfEven += 1;
             }
 
-            user_integer /= 10;
+            //Divide int by 10 to remove last digit since it's already accounted for.
+            userInteger /= 10;
         }
 
-        System.out.printf("Zeroes: " + amount_of_zeroes + "\n"
-                        + "Odd: " + amount_of_odds + "\n"
-                        + "Even: " + amount_of_even + "\n"
-                        + "Sum: " + total_sum);
+        System.out.printf("Zeroes: " + amountofZeroes + "\n"
+                        + "Odd: " + amountOfOdds + "\n"
+                        + "Even: " + amountOfEven + "\n"
+                        + "Sum: " + totalSum);
 
     }
 

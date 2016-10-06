@@ -1,15 +1,14 @@
 package ao222qc_assign2.Exercise5;
 
-/**
- * Created by Adam on 2016-09-21.
- */
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.TreeSet;
-public class WordCount1Main
+
+/**
+ * Created by Adam on 2016-09-23.
+ */
+public class WordCount2Main
 {
     public static void main(String args[])
     {
@@ -19,10 +18,11 @@ public class WordCount1Main
             System.out.println("No file provided.");
         }
         else
-             path = args[0];
+            path = args[0];
 
-        HashSet<Word> hs = new HashSet();
-        TreeSet<Word> ts = new TreeSet();
+        HashWordSet hws = new HashWordSet();
+        TreeWordSet tws = new TreeWordSet();
+
         try
         {
             File file = new File(path);
@@ -31,19 +31,19 @@ public class WordCount1Main
             while(input.hasNext())
             {
                 Word w = new Word(input.next());
-                hs.add(w);
-                ts.add(w);
+                hws.add(w);
+                tws.add(w);
             }
             input.close();
 
-            Iterator treeIterator = ts.iterator();
-
-            while(treeIterator.hasNext())
+            Iterator it = tws.iterator();
+            while(it.hasNext())
             {
-                System.out.println(treeIterator.next());
+                System.out.println(it.next());
             }
-            System.out.println("HashSet size: " + hs.size());
-            System.out.println("TreeSet size: " + ts.size());
+
+            System.out.println("HasWordSet size: " + hws.size());
+            System.out.println("TreeWordSet size : " + tws.size());
         }
         catch (FileNotFoundException e)
         {

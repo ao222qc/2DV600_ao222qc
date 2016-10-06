@@ -7,30 +7,28 @@ import java.util.Scanner;
 
 public class HighLow {
 
-    private int random_number;
-    private int amount_of_guesses;
+    private static int randomNumber;
+    private static int amountofGuesses;
     private static final int MAX_GUESSES = 10;
 
-    public void HighLow()
+    public static void main(String args[])
     {
-        this.RandomizeNumber();
-        this.MakeGuess();
+        randomizeNumber();
+        makeGuess();
 
     }
 
-    private void RandomizeNumber()
+    private static void randomizeNumber()
     {
         Random rand = new Random();
 
         // 0 till 49, min 1, max 98 + 1
-        int random_integer = rand.nextInt(50);
+        int randomInteger = rand.nextInt(50);
 
-        this.random_number = (random_integer * 2) + 1;
-
-        System.out.print(this.random_number);
+        randomNumber = (randomInteger * 2) + 1;
     }
 
-    private void MakeGuess()
+    private static void makeGuess()
     {
         Scanner scanner = new Scanner(System.in);
         int guess;
@@ -39,17 +37,17 @@ public class HighLow {
 
         while(true)
         {
-            if(amount_of_guesses < MAX_GUESSES)
+            if(amountofGuesses < MAX_GUESSES)
             {
                 guess = scanner.nextInt();
-                amount_of_guesses += 1;
+                amountofGuesses += 1;
 
-                if (guess > random_number) {
+                if (guess > randomNumber) {
                     System.out.print("Hint: Lower");
-                } else if (guess < random_number) {
+                } else if (guess < randomNumber) {
                     System.out.print("Hint: Higher");
                 } else {
-                    System.out.print("Correct, after " + amount_of_guesses + " guesses!");
+                    System.out.print("Correct, after " + amountofGuesses + " guesses!");
                     break;
                 }
             }

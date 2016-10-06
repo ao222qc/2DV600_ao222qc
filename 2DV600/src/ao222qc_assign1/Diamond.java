@@ -4,17 +4,22 @@ package ao222qc_assign1; /**
 import java.util.Scanner;
 public class Diamond {
 
-    public static void MakeDiamonds() {
-        Scanner input_scanner = new Scanner(System.in);
+    public static void main(String args[])
+    {
+        makeDiamonds();
+    }
+
+    public static void makeDiamonds() {
+        Scanner inputScanner = new Scanner(System.in);
         System.out.printf("Please insert an odd number to get your diamond.");
 
         try
         {
-            int input = input_scanner.nextInt();
+            int input = inputScanner.nextInt();
 
             if(input % 2 == 0)
             {
-                throw new Exception();
+                throw new IllegalArgumentException("You haven't inputted an odd number.");
             }
 
         int midPoint = input / 2;
@@ -43,7 +48,7 @@ public class Diamond {
         }
         catch(Exception e)
         {
-            System.out.printf("You have not inputted an odd number.");
+            System.out.printf(e.getMessage());
         }
     }
 }

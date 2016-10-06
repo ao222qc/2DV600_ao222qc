@@ -10,28 +10,33 @@ import java.util.Scanner;
 
 public class Histogram {
 
+    static String[] histogramData = {"1-10    : | ", "11-20   : | ", "21-30   : | ", "31-40   : | ", "41-50   : | ", "51-60   : | ", "61-70   : | ", "71-80   : | ", "81-90   : |", "91-100  : | ", "101-200 : | "};
+
     public static void main(String args[])
     {
-        int oneTwentyFive = 0;
-        int twentySixFifty = 0;
-        int fiftyOneSeventyFive = 0;
-        int seventySixOneHundred = 0;
-        int oneHundredAndOneFifty = 0;
-        int OneHundredAndFiftyOneTwoHundred = 0;
-        int smallerOrBigger = 0;
+        if(args.length > 0)
+        {
+            readIntegers(args[0]);
+            printHistogram();
+        }
+        else
+        {
+            System.out.println("No path was supplied, please make sure you provide a path to a file.");
+        }
+    }
 
+    public static void printHistogram()
+    {
+        for(String x : histogramData)
+        {
+            System.out.println(x);
+        }
+    }
+
+    public static void readIntegers(String path)
+    {
         try
         {
-            String path = "";
-
-            if (args[0] != null)
-            {
-                path = args[0].toString();
-            }
-            else
-            {
-                //ERROR M8 NO PATH PROVIDED
-            }
             Scanner input = new Scanner(System.in);
             File numbersFile = new File(path);
             input = new Scanner(numbersFile);
@@ -42,36 +47,49 @@ public class Histogram {
                 {
                     int currentNumber = input.nextInt();
 
-                    if(currentNumber >= 1 && currentNumber <= 200)
+                    if(currentNumber >= 1 && currentNumber <= 10)
                     {
-                        if(currentNumber <= 25)
-                        {
-                            oneTwentyFive++;
-                        }
-                        else if(currentNumber <= 50)
-                        {
-                            twentySixFifty++;
-                        }
-                        else if(currentNumber <= 75)
-                        {
-                            fiftyOneSeventyFive++;
-                        }
-                        else if(currentNumber <= 100)
-                        {
-                            seventySixOneHundred++;
-                        }
-                        else if(currentNumber <= 150)
-                        {
-                            oneHundredAndOneFifty++;
-                        }
-                        else
-                        {
-                            OneHundredAndFiftyOneTwoHundred++;
-                        }
+                        histogramData[0] += "*";
                     }
-                    else
+                    else if(currentNumber <= 20)
                     {
-                        smallerOrBigger++;
+                        histogramData[1] += "*";
+                    }
+                    else if(currentNumber <= 30)
+                    {
+                        histogramData[2] += "*";
+                    }
+                    else if(currentNumber <= 40)
+                    {
+                        histogramData[3] += "*";
+                    }
+                    else if(currentNumber <= 50)
+                    {
+                        histogramData[4] += "*";
+                    }
+                    else if(currentNumber <= 60)
+                    {
+                        histogramData[5] += "*";
+                    }
+                    else if(currentNumber <= 70)
+                    {
+                        histogramData[6] += "*";
+                    }
+                    else if(currentNumber <= 80)
+                    {
+                        histogramData[7] += "*";
+                    }
+                    else if(currentNumber <= 90)
+                    {
+                        histogramData[8] += "*";
+                    }
+                    else if(currentNumber <= 100)
+                    {
+                        histogramData[9] += "*";
+                    }
+                    else if(currentNumber <= 200)
+                    {
+                        histogramData[10] += "*";
                     }
                 }
                 else
@@ -79,13 +97,6 @@ public class Histogram {
                     input.next();
                 }
             }
-
-            System.out.println("1-25: " + oneTwentyFive);
-            System.out.println("26-50: " + twentySixFifty);
-            System.out.println("51-75: "+fiftyOneSeventyFive);
-            System.out.println("76-100: " + seventySixOneHundred);
-            System.out.println("101-150: " + oneHundredAndOneFifty);
-            System.out.println("151-200: " + OneHundredAndFiftyOneTwoHundred);
         }
         catch(Exception e)
         {

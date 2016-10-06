@@ -20,16 +20,15 @@ public class CountJava
 
         try
         {
-            if(args.length != 0)
+            if(args.length > 0)
             {
-                path = args[0];
+                getFilePaths(args[0]);
             }
             else
             {
                 throw new Exception("Folder path not provided.");
             }
 
-            getFilePaths(path);
         }
         catch(Exception e)
         {
@@ -49,7 +48,7 @@ public class CountJava
         {
             if (x.isDirectory())
             {
-                getFilePaths(x.getAbsolutePath());
+                getFilePaths(x.getAbsolutePath());  //Call itself with path of folder.
             }
             else if(x.isFile() && x.getName().endsWith(".java"))
             {
@@ -82,8 +81,8 @@ public class CountJava
         }
         catch(Exception e)
         {
-            System.out.println("exception happen lel");
+            System.out.println("Something unexpected happened while reading line numbers of java file.");
+            return 0;
         }
-        return amountOfLines;
     }
 }

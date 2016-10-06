@@ -23,9 +23,13 @@ public class CountChars {
         {
             String path = "";
 
-            if(args[0].toString() != null)
+            if(args.length > 0)
             {
                  path = args[0].toString();
+            }
+            else
+            {
+                throw new FileNotFoundException("No path has been provided. Please provide path to the main method.");
             }
 
             Scanner input = new Scanner(System.in);
@@ -33,8 +37,7 @@ public class CountChars {
             File textFile = new File(path);
             if(!textFile.exists())
             {
-                System.out.println("Textfile not found");
-                throw new FileNotFoundException("Textfile not found.");
+                throw new FileNotFoundException("File cannot be found. Please make sure your path is correct.");
             }
             System.out.println("Reading text file...");
             input = new Scanner(textFile);
@@ -80,7 +83,7 @@ public class CountChars {
         }
         catch(Exception e)
         {
-            System.out.println("Execution of program has been terminated.");
+            System.out.println(e.getMessage());
         }
 
 

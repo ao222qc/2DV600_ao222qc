@@ -8,16 +8,11 @@ public class Fraction
     private int numerator;
     private int denominator;
 
-    /*public static void main(String args[]) throws Exception
-    {
-
-    }*/
-
     public Fraction(int n, int d) throws Exception
     {
         setNumerator(n);
         setDenominator(d);
-        this.simplify();
+        this.simplify();    //Simplify to lowest common denominator each time a new Fraction is created.
     }
 
     public boolean isNegative()
@@ -44,27 +39,50 @@ public class Fraction
 
     public Fraction subtract(Fraction fract2) throws Exception
     {
-        Fraction frac = new Fraction(((this.getNumerator()*fract2.getDenominator())-
-                (fract2.getNumerator()*this.getDenominator())),
-                (this.getDenominator()*fract2.getDenominator()));
-
-        return frac;
+        try
+        {
+            Fraction frac = new Fraction(((this.getNumerator() * fract2.getDenominator()) -
+                    (fract2.getNumerator() * this.getDenominator())),
+                    (this.getDenominator() * fract2.getDenominator()));
+            return frac;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public Fraction multiply(Fraction fract2) throws Exception
     {
-        Fraction frac = new Fraction(((this.getNumerator()*1)*
-                (1*this.getDenominator())),
-                (this.getDenominator()*fract2.getDenominator()));
+        try
+        {
+            Fraction frac = new Fraction(((this.getNumerator() * 1) *
+                    (1 * this.getDenominator())),
+                    (this.getDenominator() * fract2.getDenominator()));
+            return frac;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
 
-        return frac;
     }
 
     public Fraction divide(Fraction fract2) throws Exception
     {
-        Fraction frac = new Fraction((this.getNumerator()* fract2.getDenominator()) , (this.getDenominator()*fract2.getNumerator()));
+        try
+        {
+            Fraction frac = new Fraction((this.getNumerator() * fract2.getDenominator()), (this.getDenominator() * fract2.getNumerator()));
 
-        return frac;
+            return frac;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public void simplify()
@@ -123,9 +141,7 @@ public class Fraction
 
     public String toString()
     {
-
         return "Fraction: " + this.getNumerator() + "/" + this.getDenominator();
-
     }
 
 

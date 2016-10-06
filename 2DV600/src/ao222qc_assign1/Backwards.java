@@ -8,13 +8,22 @@ import java.util.Arrays;
 
 public class Backwards {
 
-    public static void Reverse()
+    public static void main(String args[])
     {
-        Scanner input_scanner = new Scanner(System.in);
+        String userInput = readInputString();
+        Reverse(userInput);
+    }
 
-        String user_input = input_scanner.nextLine();
+    public static String readInputString()
+    {
+        Scanner inputScanner = new Scanner(System.in);
+        return inputScanner.nextLine();
+    }
 
-        StringBuffer sb = new StringBuffer(user_input);
+
+    public static void Reverse(String str)
+    {
+        StringBuffer sb = new StringBuffer(str);
 
         System.out.printf(sb.reverse().toString());
     }

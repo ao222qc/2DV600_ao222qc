@@ -5,20 +5,25 @@ import java.util.Scanner;
 
 public class LargestK {
 
-    public static void LargestK()
+    public static void main(String args[])
     {
-        Scanner input_scanner = new Scanner(System.in);
+        largestK();
+    }
 
-        int max_val = input_scanner.nextInt();
+    public static void largestK()
+    {
+        Scanner inputScanner = new Scanner(System.in);
 
-        int total_sum = 0;
-        int temp_val = 0;
+        int maxVal = inputScanner.nextInt();
 
-        while((total_sum + (temp_val + 2)) <= max_val)
+        int totalSum = 0;
+        int tempVal = 0;
+
+        while((totalSum + (tempVal + 2)) <= maxVal)
         {
-            temp_val += 2;
-            total_sum += temp_val;
+            tempVal += 2;
+            totalSum += tempVal;
         }
-        System.out.print(temp_val);
+        System.out.print(tempVal);
     }
 }

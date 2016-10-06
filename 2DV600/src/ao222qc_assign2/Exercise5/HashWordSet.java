@@ -16,7 +16,6 @@ public class HashWordSet implements WordSet
     {
         int hc = word.hashCode();
         if(hc < 0) hc = -hc;
-        //System.out.println(hc % buckets.length);
         return hc % buckets.length;
     }
 
@@ -106,7 +105,7 @@ public class HashWordSet implements WordSet
                 }
                 nextNode = buckets[index];
             }
-            catch (NullPointerException e)
+            catch (Exception e)
             {
                 System.out.println(e.getMessage());
             }

@@ -8,13 +8,14 @@ public class PlayCardsMain
     public static void main(String args[])
     {
         Deck d = new Deck();
+
         d.shuffle();
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 10; i++)
         {
-            System.out.println("Dealing card...");
+            System.out.println("Dealing card...\n");
             Card c = d.handsOutNextCard();
-            System.out.println(Card.Value.valueOf(c.getCardValue()) + " of " + Card.Suit.valueOf(c.getSuitValue()));
-            System.out.println("Cards left: " + d.deckSize());
+            System.out.println(c.val + " of " +  c.suit);
+            System.out.println("Cards left: " + d.deckSize() + "\n");
         }
 
     }

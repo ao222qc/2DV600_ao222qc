@@ -15,7 +15,6 @@ public class CollectionMain
 
     public static void TestArrayIntList()
     {
-        //KOM IHÅG UNDANTAGSHANTERING
         ArrayIntList arr = new ArrayIntList();
         arr.add(1);
         arr.add(2);
@@ -33,7 +32,6 @@ public class CollectionMain
 
     public static void TestArrayIntStack()
     {
-        //KOM IHÅG UNDANTAGSHANTERING
         System.out.println();
         ArrayIntStack arrIntStack = new ArrayIntStack();
         arrIntStack.push(2);
@@ -55,7 +53,5 @@ public class CollectionMain
         {
             System.out.println(e.getMessage());
         }
-
-
     }
 }

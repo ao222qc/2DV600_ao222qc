@@ -14,7 +14,7 @@ public class TransportFerry implements Ferry
     private double actualVehicleSpace = 0.0;
     private final int MAX_PASSENGERS = 200;
     private final int MAX_SPACE = 40;
-
+    private int moneyEarned = 0;
 
     @Override
     public int countPassengers()
@@ -55,17 +55,18 @@ public class TransportFerry implements Ferry
     @Override
     public int countMoney()
     {
-        int moneyEarned = 0;
+        int money = 0;
 
         for(Passenger p : passengerList)
         {
-            moneyEarned += p.getFerryFee();
+            money += p.getFerryFee();
         }
         for(Vehicle v : vehicleList)
         {
-            moneyEarned += v.getPrice();
+            money += v.getPrice();
         }
-        return moneyEarned;
+
+        return money;
     }
 
     @Override
@@ -97,7 +98,10 @@ public class TransportFerry implements Ferry
     @Override
     public void disembark()
     {
-
+        moneyEarned = countMoney() + moneyEarned;
+        vehicleList.clear();
+        actualVehicleSpace = 0.0;
+        passengerList.clear();
     }
 
     @Override
@@ -120,7 +124,8 @@ public class TransportFerry implements Ferry
         sb.append("Welcome to the transport ferry!\n");
         sb.append("We currently have " + countPassengers() + " passengers onboard!\n");
         sb.append("Boarded vehicles are currently taking up " + countActualVehicleSpace() + " random units of measurement!\n");
-        sb.append("We've made "+ countMoney() + " kr from this trip!\n");
+        sb.append("We've made "+  countMoney() + " kr from this trip!\n");
+        sb.append("We've made in total " + moneyEarned + " from previous trips!");
         return sb.toString();
     }
 
