@@ -11,6 +11,9 @@ import java.util.*;
  */
 public class MyConnectedComponents<E> implements ConnectedComponents<E>
 {
+    //private Set<Node<E>> visited = new HashSet<>();
+    //private Collection<Collection<Node<E>>> cc = new ArrayList<>();
+    private MyDFS<E> myDFS = new MyDFS();
 
     /**
      * Two nodes a and b are directly connected if their exist an edge (a,b)
@@ -29,27 +32,63 @@ public class MyConnectedComponents<E> implements ConnectedComponents<E>
     @Override
     public Collection<Collection<Node<E>>> computeComponents(DirectedGraph<E> dg)
     {
-        Collection<Collection<Node<E>>> mainList = new LinkedList<>();
+        //visited.clear();
+        //cc.clear();
         Set<Node<E>> visited = new HashSet<>();
+        Collection<Collection<Node<E>>> cc = new ArrayList<>();
 
-        MyDFS<E> myDFS = new MyDFS<>();
+        Iterator<Node<E>> it = dg.iterator();
 
-        Iterator<Node<E>> iterator = dg.heads();
-
-        while(iterator.hasNext())
+        while(it.hasNext())
         {
-            Node<E> node = iterator.next();
+            Node<E> node = it.next();
+            List<Node<E>> tempList = myDFS.dfs(dg, node);
+            List<Node<E>> toAddList = new LinkedList<>();
 
-            List<Node<E>> nodeList = new LinkedList<>();
+            for(Node<E> n : tempList)
+            {
+                if(!visited.contains(n))
+                {
+                    visited.add(n);
+                    toAddList.add(n);
+                    if(n.inDegree() > 0) //If has preds, call recursive function to add preds to toAddList.
+                    {
+                        addPreds(n, toAddList, visited);
+                    }
+                }
+            }
+            if(toAddList.size() > 0)
+            {
+                cc.add(toAddList);
+            }
+        }
+        return cc;
+    }
 
-            for(Node<E> n : myDFS.dfs(dg, node))
+    /**
+     * Recursive function for adding predecessors of node. Called if node contains one or more indegrees (aka predeccessors).
+     * @param node
+     * @param toAddList
+     * @return
+     */
+    public List<Node<E>> addPreds(Node<E> node, List<Node<E>> toAddList, Set<Node<E>> visited)
+    {
+        Iterator<Node<E>> predIt = node.predsOf();
+
+        while(predIt.hasNext())
+        {
+            Node<E> n = predIt.next();
+
+            if(!visited.contains(n))
             {
                 visited.add(n);
-                nodeList.add(n);
+                toAddList.add(n);
+                toAddList = addPreds(n, toAddList, visited);
             }
-
-            mainList.add(nodeList);
         }
-        return mainList;
+        return toAddList;
     }
 }
+
+
+

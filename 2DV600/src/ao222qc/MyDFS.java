@@ -35,7 +35,8 @@ public class MyDFS<E> implements DFS<E>
         if(!visited.contains(root))
             visited.add(root);
             root.num = visited.size();
-
+        if(!result.contains(root))
+            result.add(root);
         while(successors.hasNext())
         {
             MyNode n = (MyNode)successors.next();

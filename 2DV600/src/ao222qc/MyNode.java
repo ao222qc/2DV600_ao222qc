@@ -25,25 +25,6 @@ class MyNode<E> extends Node<E>
     }
 
     @Override
-    public String toString()
-    {
-        String str = "";
-        str+= "Node value: " + this.item() + ". ";
-        str += "Predecessors : ";
-        for(Node<E> n : predecessors)
-        {
-            str += n.item();
-        }
-        str += " Successors : ";
-        for(Node<E> n : successors)
-        {
-            str += n.item() + " , ";
-        }
-        //str += "\n";
-        return str;
-    }
-
-    @Override
     public boolean hasSucc(Node<E> node)
     {
         return this.successors.contains(node);
