@@ -11,9 +11,7 @@ import java.util.*;
  */
 public class MyConnectedComponents<E> implements ConnectedComponents<E>
 {
-    //private Set<Node<E>> visited = new HashSet<>();
-    //private Collection<Collection<Node<E>>> cc = new ArrayList<>();
-    private MyDFS<E> myDFS = new MyDFS();
+
 
     /**
      * Two nodes a and b are directly connected if their exist an edge (a,b)
@@ -32,63 +30,74 @@ public class MyConnectedComponents<E> implements ConnectedComponents<E>
     @Override
     public Collection<Collection<Node<E>>> computeComponents(DirectedGraph<E> dg)
     {
-        //visited.clear();
-        //cc.clear();
+        MyDFS<E> myDFS = new MyDFS();
         Set<Node<E>> visited = new HashSet<>();
         Collection<Collection<Node<E>>> cc = new ArrayList<>();
+        Deque<Node<E>> toVisit = new ArrayDeque<>();
 
         Iterator<Node<E>> it = dg.iterator();
 
-        while(it.hasNext())
+        while(it.hasNext()) //For each node O(V)
         {
             Node<E> node = it.next();
-            List<Node<E>> tempList = myDFS.dfs(dg, node);
-            List<Node<E>> toAddList = new LinkedList<>();
 
-            for(Node<E> n : tempList)
+            if(!visited.contains(node))
             {
-                if(!visited.contains(n))
+                List<Node<E>> tempList = myDFS.dfs(dg, node); //O(V(V+E))
+                LinkedHashSet<Node<E>> toAddList = new LinkedHashSet<>();
+
+                for(Node<E> n : tempList) //another O(V)
                 {
-                    visited.add(n);
-                    toAddList.add(n);
-                    if(n.inDegree() > 0) //If has preds, call recursive function to add preds to toAddList.
+                    if(visited.add(n))
                     {
-                        addPreds(n, toAddList, visited);
+                        toAddList.add(n);
+                        if(n.inDegree() > 0) //If has preds, call recursive function to add preds to toAddList.
+                        {
+                            addPreds(n, toAddList, visited, toVisit); //Another O(V+E)
+                        }
                     }
                 }
-            }
-            if(toAddList.size() > 0)
-            {
-                cc.add(toAddList);
+                //if(toAddList.size() > 0)
+                //{
+                    cc.add(toAddList);
+                //}
             }
         }
         return cc;
     }
 
     /**
-     * Recursive function for adding predecessors of node. Called if node contains one or more indegrees (aka predeccessors).
+     * Function for adding predecessors of node. Called if node contains one or more indegrees (aka predeccessors).
      * @param node
      * @param toAddList
      * @return
      */
-    public List<Node<E>> addPreds(Node<E> node, List<Node<E>> toAddList, Set<Node<E>> visited)
+    public Collection<Node<E>> addPreds(Node<E> node, Set<Node<E>> toAddList, Set<Node<E>> visited, Deque<Node<E>> toVisit)
     {
-        Iterator<Node<E>> predIt = node.predsOf();
+        toVisit.clear();
+        node.predsOf().forEachRemaining(toVisit::add);
 
-        while(predIt.hasNext())
+        while(!toVisit.isEmpty())
         {
-            Node<E> n = predIt.next();
+            node = toVisit.removeFirst();
+            visited.add(node);
 
-            if(!visited.contains(n))
+            if(toAddList.add(node))
             {
-                visited.add(n);
-                toAddList.add(n);
-                toAddList = addPreds(n, toAddList, visited);
+                node.num = toAddList.size();
+                Iterator<Node<E>> predsIt = node.succsOf();
+                while (predsIt.hasNext())
+                {
+                    Node<E> n = predsIt.next();
+
+                    if (!visited.contains(n) && !toVisit.contains(n))
+                    {
+                        toVisit.add(n);
+                    }
+                }
             }
         }
         return toAddList;
     }
 }
-
-
 

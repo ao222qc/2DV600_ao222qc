@@ -24,27 +24,25 @@ public class MyDFS<E> implements DFS<E>
         if(root == null)
             return null;
         Set<Node<E>> visited = new HashSet<>();
-        List<Node<E>> result = new LinkedList<>();
+        List<Node<E>> result = new ArrayList<>();
         return dfsRecursion(visited, root, graph, result);
 
     }
 
     private List<Node<E>> dfsRecursion(Set<Node<E>> visited, Node<E> root, DirectedGraph<E> graph, List<Node<E>> result)
     {
+        visited.add(root);
+        root.num = visited.size();
+
+        result.add(root);
+
         Iterator successors = root.succsOf();
-        if(!visited.contains(root))
-            visited.add(root);
-            root.num = visited.size();
-        if(!result.contains(root))
-            result.add(root);
         while(successors.hasNext())
         {
             MyNode n = (MyNode)successors.next();
             if(!visited.contains(n))
             {
-                result.add(n);
-                visited.add(n);
-                dfsRecursion(visited, n, graph, result);
+                result = dfsRecursion(visited, n, graph, result);
             }
         }
         return result;
@@ -55,12 +53,22 @@ public class MyDFS<E> implements DFS<E>
     public List<Node<E>> dfs(DirectedGraph<E> graph)
     {
         Set<Node<E>> visited = new HashSet<>();
-        List<Node<E>> result = new LinkedList<>();
+        List<Node<E>> result = new ArrayList<>();
+        Iterator<Node<E>> iterator;
 
-        Iterator<Node<E>> iterator = graph.heads();
-        while(iterator.hasNext())
+        if(graph.headCount() != 0)
         {
-            result = dfsRecursion(visited, iterator.next(), graph, result);
+            iterator = graph.heads();
+
+            while(iterator.hasNext())
+            {
+                result = dfsRecursion(visited, iterator.next(), graph, result);
+            }
+        }
+        else
+        {
+            Node<E> node = graph.getNodeFor(graph.allItems().get(0));
+            result = dfsRecursion(visited, node, graph, result);
         }
 
         return result;
@@ -73,7 +81,6 @@ public class MyDFS<E> implements DFS<E>
         List<Node<E>> nodeList = new ArrayList<>();
 
         return postOrderRecursion(visistedList, nodeList, root);
-
     }
 
     private List<Node<E>> postOrderRecursion(List<Node<E>> visitedList, List<Node<E>> nodeList, Node<E> root)
@@ -148,7 +155,6 @@ public class MyDFS<E> implements DFS<E>
             Iterator<Node<E>> iterator = node.succsOf();
             while(iterator.hasNext())
             {
-                //Node<E> n = iterator.next();
                 if(node.num <= iterator.next().num)
                     return true;
             }

@@ -23,18 +23,24 @@ public class test
         graph.addEdgeFor("f", "d");
         graph.addEdgeFor("e", "g");
         graph.addEdgeFor("y", "x");
+        graph.addEdgeFor("ab", "x");
+        graph.addEdgeFor("k", "ab");
+        graph.addEdgeFor("kkk", "lel");
         //System.out.println(graph);
         //MyGML<String> gml = new MyGML<>(graph);
 
+        MyConnectedComponents mcc = new MyConnectedComponents();
 
-
-
-        MyDFS<String> dfs = new MyDFS<>();
+        for(int i = 0; i < 2000000; i++)
+        {
+            mcc.computeComponents(graph);
+        }
+        //MyDFS<String> dfs = new MyDFS<>();
 
         //System.out.println(dfs.dfs(graph, graph.getNodeFor("a")));
 
         //System.out.println(dfs.postOrder(graph, graph.getNodeFor("a")));
-        System.out.println(dfs.topSort(graph));
+       // System.out.println(dfs.topSort(graph));
 
 
     }

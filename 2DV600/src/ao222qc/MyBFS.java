@@ -1,5 +1,6 @@
 package ao222qc;
 
+import com.sun.deploy.util.OrderedHashSet;
 import graphs.BFS;
 import graphs.DirectedGraph;
 import graphs.Node;
@@ -11,10 +12,6 @@ import java.util.*;
  */
 public class MyBFS<E> implements BFS<E>
 {
-    private List<Node<E>> result = new ArrayList<>();
-    private Set<Node<E>> visited = new HashSet<>();
-    private List<Node<E>> toVisit = new ArrayList<>();
-
     /**
      * Returns the nodes visited by a breadth-first search starting from
      * the given root node. Each visited node is also attached with
@@ -23,32 +20,26 @@ public class MyBFS<E> implements BFS<E>
     @Override
     public List<Node<E>> bfs(DirectedGraph<E> graph, Node<E> root)
     {
-        result.clear();
-        visited.clear();
-        toVisit.clear();
+        LinkedHashSet<Node<E>> result = new LinkedHashSet<>();
+        Deque<Node<E>> toVisit = new ArrayDeque<>();
 
         toVisit.add(root);
 
-        while(!toVisit.isEmpty())
+        while (!toVisit.isEmpty())
         {
-            Node<E> current = toVisit.remove(0);
-            visited.add(current);
-            if(!result.contains(current))
+            Node<E> current = toVisit.removeFirst();
+            if(result.add(current))
             {
-                result.add(current);
                 current.num = result.size();
-            }
-            Iterator<Node<E>> it = current.succsOf();
-            while(it.hasNext())
-            {
-                Node<E> n = it.next();
-                if(!visited.contains(n))
+
+                Iterator<Node<E>> it = current.succsOf();
+                while (it.hasNext())
                 {
-                    toVisit.add(n);
+                    toVisit.add(it.next());
                 }
             }
         }
-        return result;
+        return new ArrayList(result);
     }
 
     /**
@@ -59,32 +50,32 @@ public class MyBFS<E> implements BFS<E>
     @Override
     public List<Node<E>> bfs(DirectedGraph<E> graph)
     {
-        result.clear();
-        visited.clear();
-        toVisit.clear();
+        LinkedHashSet<Node<E>> result = new LinkedHashSet<>();
+        Deque<Node<E>> toVisit = new ArrayDeque<>();
 
-        graph.heads().forEachRemaining(toVisit::add);   //search all heads first.
-
-        while(!toVisit.isEmpty())
+        if(graph.headCount() != 0)
         {
-            Node<E> current = toVisit.remove(0);
-            visited.add(current);
-            if(!result.contains(current))
+            graph.heads().forEachRemaining(toVisit::add);
+        }
+        else
+        {
+            toVisit.add(graph.getNodeFor(graph.allItems().get(0)));
+        }
+
+        while (!toVisit.isEmpty())
+        {
+            Node<E> current = toVisit.removeFirst();
+
+            if(result.add(current))
             {
-                result.add(current);
                 current.num = result.size();
-            }
-            Iterator<Node<E>> it = current.succsOf();
-            while(it.hasNext())
-            {
-                Node<E> n = it.next();
-                if(!visited.contains(n))
+                Iterator<Node<E>> it = current.succsOf();
+                while (it.hasNext())
                 {
-                    toVisit.add(n);
+                    toVisit.add(it.next());
                 }
             }
         }
-
-        return result;
+        return new ArrayList(result);
     }
 }
