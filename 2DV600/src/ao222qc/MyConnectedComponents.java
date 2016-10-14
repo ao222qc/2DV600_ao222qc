@@ -57,10 +57,7 @@ public class MyConnectedComponents<E> implements ConnectedComponents<E>
                         }
                     }
                 }
-                //if(toAddList.size() > 0)
-                //{
-                    cc.add(toAddList);
-                //}
+                cc.add(toAddList);
             }
         }
         return cc;

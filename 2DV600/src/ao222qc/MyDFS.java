@@ -160,40 +160,21 @@ public class MyDFS<E> implements DFS<E>
             }
         }
         return false;
-
     }
 
     @Override
     public List<Node<E>> topSort(DirectedGraph<E> graph)
     {
-        //https://rosettacode.org/wiki/Topological_sort#Java
-        //Hardly seems optimal, but it worked at least.
+        if(isCyclic(graph))
+            return null;
 
         List<Node<E>> result = new ArrayList<>();
-        List<Node<E>> todo = new LinkedList<>();
-        graph.iterator().forEachRemaining(todo::add);
-        try
+
+        List<Node<E>> reversed = postOrder(graph);
+
+        for(int i = reversed.size()-1; i >= 0; i--)
         {
-            outer:
-            while(!todo.isEmpty())
-            {
-                for(Node<E> node : todo)
-                {
-                    for(Node<E> node2 : todo)
-                    {
-                        if(!graph.containsEdgeFor(node.item(), node2.item()))
-                        {
-                            todo.remove(node);
-                            result.add(node);
-                            continue outer;
-                        }
-                    }
-                }
-            }
-        }
-        catch(Exception E)
-        {
-            return null;
+            result.add(reversed.get(i));
         }
         return result;
     }
